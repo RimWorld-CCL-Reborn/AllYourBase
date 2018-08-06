@@ -22,40 +22,43 @@ namespace AllYourBase
             //get all bases in vanilla.
             List<string> vanillaXmlAttributes = new List<string>();
 
-            List<LoadableXmlAsset> allVanillaLoadableXmlAssets = LoadedModManager.LoadModXML().Where(x => x.mod.IsCoreMod).ToList();
-
-            foreach (LoadableXmlAsset asset in allVanillaLoadableXmlAssets)
+            foreach (ModContentPack mod in LoadedModManager.RunningMods.Where(mod => mod.IsCoreMod))
             {
-                if (asset.xmlDoc?.DocumentElement == null) continue;
-                XmlNodeList childNodes = asset.xmlDoc.DocumentElement.ChildNodes;
+                foreach (LoadableXmlAsset asset in DirectXmlLoader.XmlAssetsInModFolder(mod, "Defs/"))
                 {
-                    for (int i = 0; i < childNodes.Count; i++)
+                    if (asset.xmlDoc?.DocumentElement == null) continue;
+                    XmlNodeList childNodes = asset.xmlDoc.DocumentElement.ChildNodes;
                     {
-                        if (childNodes[i].NodeType != XmlNodeType.Element) continue;
-                        if (childNodes[i]?.Attributes?["Name"] != null)
+                        for (int i = 0; i < childNodes.Count; i++)
                         {
-                            vanillaXmlAttributes.Add(childNodes[i].Attributes.GetNamedItem("Name").Value);
+                            if (childNodes[i].NodeType != XmlNodeType.Element) continue;
+                            if (childNodes[i]?.Attributes?["Name"] != null)
+                            {
+                                vanillaXmlAttributes.Add(childNodes[i].Attributes.GetNamedItem("Name").Value);
+                            }
                         }
                     }
                 }
             }
 
-
             //get all abstract bases in mods and compare them to the vanilla list.
-            List<LoadableXmlAsset> allModdedXmlAssets = LoadedModManager.LoadModXML().Where(x => !x.mod.IsCoreMod).ToList();
-
-            foreach (LoadableXmlAsset allModdedXmlAsset in allModdedXmlAssets)
+            foreach (ModContentPack mod in LoadedModManager.RunningMods.Where(mod => !mod.IsCoreMod))
             {
-                if (allModdedXmlAsset.xmlDoc?.DocumentElement == null) continue;
-                XmlNodeList childNodes = allModdedXmlAsset.xmlDoc.DocumentElement.ChildNodes;
+                foreach (LoadableXmlAsset asset in DirectXmlLoader.XmlAssetsInModFolder(mod, "Defs/"))
                 {
-                    for (int i = 0; i < childNodes.Count; i++)
+                    if (asset.xmlDoc?.DocumentElement == null) continue;
+                    XmlNodeList childNodes = asset.xmlDoc.DocumentElement.ChildNodes;
                     {
-                        if (childNodes[i].NodeType != XmlNodeType.Element) continue;
-                        if (childNodes[i]?.Attributes?["Name"] != null && vanillaXmlAttributes.Contains(childNodes[i].Attributes.GetNamedItem("Name").Value))
+                        for (int i = 0; i < childNodes.Count; i++)
                         {
-                            Log.Warning("[" + allModdedXmlAsset.mod.Name + "]" + " causes compatibility errors by overwriting " + childNodes[i].Attributes.GetNamedItem("Name").Value + " in file "
-                                      + allModdedXmlAsset.FullFilePath);
+                            if (childNodes[i].NodeType != XmlNodeType.Element) continue;
+
+                            if (childNodes[i]?.Attributes?["Name"] != null &&
+                                vanillaXmlAttributes.Contains(childNodes[i].Attributes.GetNamedItem("Name").Value))
+                            {
+                                Log.Warning("[" + asset.mod.Name + "]" + " causes compatibility errors by overwriting " +
+                                            childNodes[i].Attributes.GetNamedItem("Name").Value + " in file " + asset.FullFilePath);
+                            }
                         }
                     }
                 }
