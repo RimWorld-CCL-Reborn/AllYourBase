@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ModMetaData>
+	<name>All your base</name>
+	<author>Mehni</author>
+	<targetVersion>1.0.0</targetVersion>
+	<url></url>
+	<description>Version: 1.0. 
+	
+	Finds and detects (mis-)usage of abstract bases.</description>
+</ModMetaData>
