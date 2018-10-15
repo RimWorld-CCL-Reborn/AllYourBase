@@ -1,14 +1,15 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Xml;
+using RimWorld;
 using Verse;
 
 namespace AllYourBase
 {
-    using JetBrains.Annotations;
+    //using JetBrains.Annotations;
 
     [StaticConstructorOnStartup]
-    [UsedImplicitly]
+    //[UsedImplicitly]
     internal static class XmlSharedBaseDetection
     {
         /// <summary>
@@ -18,7 +19,7 @@ namespace AllYourBase
         /// </summary>
         static XmlSharedBaseDetection()
         {
-            if (!Prefs.DevMode) return;
+            //if (!Prefs.DevMode) return;
             //get all bases in vanilla.
             List<string> vanillaXmlAttributes = new List<string>();
 
@@ -62,6 +63,12 @@ namespace AllYourBase
                         }
                     }
                 }
+            }
+
+            foreach (ChemicalDef item in DefDatabase<ChemicalDef>.AllDefsListForReading)
+            {
+                if (item.addictionHediff?.hediffClass == null)
+                    Log.Error($"{item.defName} from mod {item.modContentPack.Name} has no addictionHediff (or missing hediffClass). This will break raids and worldgen. Misconfigured XML or parent.");
             }
         }
     }
