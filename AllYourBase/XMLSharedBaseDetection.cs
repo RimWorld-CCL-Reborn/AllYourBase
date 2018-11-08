@@ -19,7 +19,9 @@ namespace AllYourBase
         /// </summary>
         static XmlSharedBaseDetection()
         {
-            //if (!Prefs.DevMode) return;
+            //since some people have such wonderfully organised mod lists they hit the 1k limit on error logging:
+            Log.ResetMessageCount();
+
             //get all bases in vanilla.
             List<string> vanillaXmlAttributes = new List<string>();
 
