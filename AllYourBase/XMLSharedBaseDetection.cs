@@ -23,7 +23,8 @@ namespace AllYourBase
             Log.ResetMessageCount();
 
             //get all bases in vanilla.
-            Dictionary<string, string> vanillaXmlAttributes = new Dictionary<string, string>();
+            List<string> vanillaXmlAttributes = new List<string>();
+            //Dictionary<string, string> vanillaXmlAttributes = new Dictionary<string, string>();
 
             foreach (ModContentPack mod in LoadedModManager.RunningMods.Where(mod => mod.IsCoreMod))
             {
@@ -37,7 +38,7 @@ namespace AllYourBase
                             if (childNodes[i].NodeType != XmlNodeType.Element) continue;
                             if (childNodes[i]?.Attributes?["Name"] != null)
                             {
-                                vanillaXmlAttributes.Add(childNodes[i].Attributes.GetNamedItem("Name").Value, childNodes[i].Name);
+                                vanillaXmlAttributes.Add(childNodes[i].Attributes.GetNamedItem("Name").Value/*, childNodes[i].Name*/);
                             }
                         }
                     }
@@ -61,8 +62,8 @@ namespace AllYourBase
                             if (childNodes[i].NodeType != XmlNodeType.Element) continue;
 
                             if (childNodes[i]?.Attributes?["Name"] != null &&
-                                vanillaXmlAttributes.ContainsKey(childNodes[i].Attributes.GetNamedItem("Name").Value)
-                                && vanillaXmlAttributes[childNodes[i].Attributes.GetNamedItem("Name").Value] == childNodes[i].Name)
+                                vanillaXmlAttributes.Contains(childNodes[i].Attributes.GetNamedItem("Name").Value)
+                                /*&& vanillaXmlAttributes[childNodes[i].Attributes.GetNamedItem("Name").Value] == childNodes[i].Name*/)
                             {
                                 Log.Warning("[" + asset.mod.Name + "]" + " causes compatibility errors by overwriting " +
                                             childNodes[i].Attributes.GetNamedItem("Name").Value + " in file " + asset.FullFilePath, true);
