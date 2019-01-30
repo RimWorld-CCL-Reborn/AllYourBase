@@ -2,9 +2,13 @@
 <ModMetaData>
 	<name>All your base</name>
 	<author>Mehni</author>
-	<targetVersion>1.0.0</targetVersion>
-	<url></url>
-	<description>Version: 1.0. 
-	
-	Finds and detects (mis-)usage of abstract bases.</description>
+	<supportedVersions>
+		<li>1.0</li>
+	</supportedVersions>
+	<url>https://github.com/RimWorld-CCL-Reborn/AllYourBase</url>
+	<description>Version: 1.0. Finds and detects (mis-)usage of abstract bases.
+
+Usage:
+	Load order is irrelevant. AllYourBase will spit out yellow warnings with the exact mod, XML node and file that misbehaves.
+	If you enable Verbose Logging, AllYourBase will attempt to fix overwrites. Sometimes this makes it worse. Use Steam's handy Verify File Integrity if that happens.</description>
 </ModMetaData>
