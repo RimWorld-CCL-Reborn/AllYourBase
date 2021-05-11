@@ -80,8 +80,15 @@ namespace AllYourBase
                         }
                     }
                     if (dirty)
+                    {
                         asset.xmlDoc.Save(asset.FullFilePath);
+                    }
                 }
+            }
+            if (Prefs.LogVerbose)
+            {
+                Log.Message("AllYourBase has completed its attempt to fix compatibility errors, and will now turn off verbose logging.", true);
+                Prefs.LogVerbose = false;
             }
 
             foreach (ChemicalDef item in DefDatabase<ChemicalDef>.AllDefsListForReading)
