@@ -2,11 +2,12 @@
 <ModMetaData>
 	<name>All your base</name>
 	<author>Mehni</author>
+	<packageId>Mehni.AllYourBase</packageId>
 	<supportedVersions>
-		<li>1.0</li>
+		<li>1.2</li>
 	</supportedVersions>
 	<url>https://github.com/RimWorld-CCL-Reborn/AllYourBase</url>
-	<description>Version: 1.0. Finds and detects (mis-)usage of abstract bases.
+	<description>Version: 1.1. Finds and detects (mis-)usage of abstract bases.
 
 Usage:
 	Load order is irrelevant. AllYourBase will spit out yellow warnings with the exact mod, XML node and file that misbehaves.

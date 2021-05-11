@@ -24,7 +24,6 @@ namespace AllYourBase
 
             //get all bases in vanilla.
             List<string> vanillaXmlAttributes = new List<string>();
-            //Dictionary<string, string> vanillaXmlAttributes = new Dictionary<string, string>();
 
             foreach (ModContentPack mod in LoadedModManager.RunningMods.Where(mod => mod.IsCoreMod))
             {
@@ -38,7 +37,7 @@ namespace AllYourBase
                             if (childNodes[i].NodeType != XmlNodeType.Element) continue;
                             if (childNodes[i]?.Attributes?["Name"] != null)
                             {
-                                vanillaXmlAttributes.Add(childNodes[i].Attributes.GetNamedItem("Name").Value/*, childNodes[i].Name*/);
+                                vanillaXmlAttributes.Add(childNodes[i].Attributes.GetNamedItem("Name").Value);
                             }
                         }
                     }
@@ -62,8 +61,7 @@ namespace AllYourBase
                             if (childNodes[i].NodeType != XmlNodeType.Element) continue;
 
                             if (childNodes[i]?.Attributes?["Name"] != null &&
-                                vanillaXmlAttributes.Contains(childNodes[i].Attributes.GetNamedItem("Name").Value)
-                                /*&& vanillaXmlAttributes[childNodes[i].Attributes.GetNamedItem("Name").Value] == childNodes[i].Name*/)
+                                vanillaXmlAttributes.Contains(childNodes[i].Attributes.GetNamedItem("Name").Value))
                             {
                                 Log.Warning("[" + asset.mod.Name + "]" + " causes compatibility errors by overwriting " +
                                             childNodes[i].Attributes.GetNamedItem("Name").Value + " in file " + asset.FullFilePath, true);
@@ -73,6 +71,10 @@ namespace AllYourBase
                                     Log.Message($"Attempting fix for {childNodes[i].Attributes.GetNamedItem("Name").Value}", true);
                                     dirty = true;
                                     asset.xmlDoc.DocumentElement.RemoveChild(childNodes[i]);
+                                }
+                                else
+                                {
+                                    Log.Message("If you enable Verbose Logging, AllYourBase will attempt to fix compatibility errors.", true);
                                 }
                             }
                         }
