@@ -45,7 +45,7 @@ namespace AllYourBase
             }
 
             if (Prefs.LogVerbose)
-                Log.Error("Verbose mode detected. AllYourBase will attempt to fix compatibility errors. If problem persists or gets worse, Verify File Integrity or redownload affected mods.", true);
+                Log.Error("Verbose mode detected. AllYourBase will attempt to fix compatibility errors. If problem persists or gets worse, Verify File Integrity or redownload affected mods.");
 
             //get all bases in mods and compare them to the vanilla list.
             foreach (ModContentPack mod in LoadedModManager.RunningMods.Where(mod => !mod.IsCoreMod))
@@ -64,17 +64,17 @@ namespace AllYourBase
                                 vanillaXmlAttributes.Contains(childNodes[i].Attributes.GetNamedItem("Name").Value))
                             {
                                 Log.Warning("[" + asset.mod.Name + "]" + " causes compatibility errors by overwriting " +
-                                            childNodes[i].Attributes.GetNamedItem("Name").Value + " in file " + asset.FullFilePath, true);
+                                            childNodes[i].Attributes.GetNamedItem("Name").Value + " in file " + asset.FullFilePath);
 
                                 if (Prefs.LogVerbose)
                                 {
-                                    Log.Message($"Attempting fix for {childNodes[i].Attributes.GetNamedItem("Name").Value}", true);
+                                    Log.Message($"Attempting fix for {childNodes[i].Attributes.GetNamedItem("Name").Value}");
                                     dirty = true;
                                     asset.xmlDoc.DocumentElement.RemoveChild(childNodes[i]);
                                 }
                                 else
                                 {
-                                    Log.Message("If you enable Verbose Logging, AllYourBase will attempt to fix compatibility errors.", true);
+                                    Log.Message("If you enable Verbose Logging, AllYourBase will attempt to fix compatibility errors.");
                                 }
                             }
                         }
@@ -87,7 +87,7 @@ namespace AllYourBase
             }
             if (Prefs.LogVerbose)
             {
-                Log.Message("AllYourBase has completed its attempt to fix compatibility errors, and will now turn off verbose logging.", true);
+                Log.Message("AllYourBase has completed its attempt to fix compatibility errors, and will now turn off verbose logging.");
                 Prefs.LogVerbose = false;
             }
 
